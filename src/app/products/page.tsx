@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 const fetchProducts = async () =>{
-  const response = await fetch(`https://dummyjson.com/products?limit=${15}`)
+  const response = await fetch(`https://dummyjson.com/products`)
   const data = await response.json()
   return data.products;
 }
@@ -16,6 +16,7 @@ const page = () => {
     { queryKey: ['products'], 
     queryFn: fetchProducts,
     staleTime: 10000
+    //enabled !! productsData (allias)   for rendering 1st api and 2nd will be renedered afterwards
   })
  
   if(isLoading){
@@ -30,6 +31,11 @@ const page = () => {
     <div className="mb-10">
       <div className="">
       <h1 className="font-bold text-3xl flex flex-col items-center mt-10">Products List</h1>
+     <Link href='/add'>
+      <div className="flex justify-end">
+        <button className="bg-green-600 text-white p-2 rounded-md mx-10">Add Product</button>
+      </div>
+     </Link>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">        
           {
           productsData?.map((item: any)=>{
